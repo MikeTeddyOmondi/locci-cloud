@@ -1,0 +1,20 @@
+{
+  "name": "infrad",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && nodemon dist/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.1.5",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.1"
+  }
+}
