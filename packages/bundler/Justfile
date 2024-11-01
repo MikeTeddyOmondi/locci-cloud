@@ -1,0 +1,9 @@
+default:
+    just --list
+
+build:
+    nj-cli build
+
+build-release:
+    nj-cli build --release
+

@@ -85,20 +85,28 @@ class IncusSocketAPI {
 
   async execute(args: any) {
     return new Promise((resolve, reject) => {
-      console.log(args)
       const command = spawn(this.baseCommand, args);
-      console.log({ command });
+
       let stdout = '';
       let stderr = '';
 
       command.stdout.on('data', (data: string) => {
-        console.log({ stdout: data })
-        stdout += data.toString();
+        const parsedData = Buffer.from(data).toString('utf-8');
+        // console.log({ stdout: parsedData })
+        stdout += parsedData;
       });
 
       command.stderr.on('data', (data: string) => {
-        console.log({ stderr: data })
-        stderr += data.toString();
+        // console.log({ stderr: JSON.stringify(data) })
+        // Parse the stderr object
+        // const parsedStderr = JSON.parse(data);
+
+        // Convert the Buffer data back to a string
+        // const errorMessage = Buffer.from(parsedStderr.data).toString('utf-8');
+        const errorMessage = Buffer.from(data).toString('utf-8');
+
+        // stderr += data.toString();
+        stderr += errorMessage;
       });
 
       command.on('close', (code: number) => {
@@ -116,7 +124,7 @@ class IncusSocketAPI {
   }
 
   async createContainer(image: string, name: string) {
-    return this.execute(['launch', image, name, '--force-local']);
+    return this.execute(['launch', image, name]); // , '--force-local'
   }
 
   async startContainer(name: string) {

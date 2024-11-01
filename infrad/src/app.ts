@@ -15,9 +15,9 @@ app.get("/containers", async (req, res) => {
   }
 });
 
-app.get("/create-containers", async (req, res) => {
+app.post("/create-containers", async (req, res) => {
   try {
-    const response = await incus.createContainer("docker.io:ubuntu/22.04", "ubuntu-test");
+    const response = await incus.createContainer("images:ubuntu/22.04", "ubuntu-locci");
     console.log({ response })
     res.status(200).json("container created");
   } catch (error: any) {
