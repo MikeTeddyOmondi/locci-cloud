@@ -1,104 +1,50 @@
-#![allow(unused_imports)]
-#![allow(dead_code)]
+#![deny(clippy::all)]
 #![allow(unused)]
 
-use dagger_sdk::HostDirectoryOpts;
-use dotenv::dotenv;
-use node_bindgen::core::JSValue;
-use node_bindgen::core::{
-    val::{JsEnv, JsObject},
-    NjError, TryIntoJs,
-};
-use node_bindgen::derive::node_bindgen;
-use node_bindgen::sys::napi_value;
-use std::env;
+#[macro_use]
+extern crate napi_derive;
 
-#[node_bindgen]
-struct Bundler {
-    project_id: String,
-    // client:
+use napi::bindgen_prelude::*;
+use dagger_sdk::{Container, Directory, Query};
+use eyre::Result;
+
+#[napi]
+async fn bundle() -> Result<()> {
+  let client = dagger_sdk::connect().await.expect("Error connecting to Dagger Engine!");
+  let build_directory = build_frontend(&client).await;
+  let image = build_prod_image(&client, build_directory).await;
+  let image_reference = push_image(image).await?; //.expect("Error pushing image to OCI Registry!");
+  println!("Image published at: {}", image_reference);
+  Ok(())
 }
 
-#[node_bindgen]
-impl Bundler {
-    #[node_bindgen(constructor)]
-    fn new(project_id: String) -> Self {
-        Self {
-            project_id: "".to_string(),
-        }
-    }
-
-    // Get repoUrl & repoBranch
-    // Get host dir path / github repo
-    // get dagger client
-    // run pipeline
-    #[node_bindgen]
-    async fn build_pipeline(repo_url: String, repo_branch: String) -> std::io::Result<()> {
-        let client = dagger_sdk::connect()
-            .await
-            .expect("Failed to connect to Dagger engine!");
-
-        // get host path
-        let host_source_dir = client.host().directory_opts(
-            "./downloads/react-app",
-            HostDirectoryOpts {
-                exclude: Some(vec!["node_modules".into(), "ci/".into()]),
-                include: None,
-            },
-        );
-
-        // "https://github.com/MikeTeddyOmondi/bun-next-app"
-        let git_source_dir = client.host().directory_opts(
-            repo_url,
-            HostDirectoryOpts {
-                exclude: None,
-                include: None,
-            },
-        );
-
-        // build project
-        let repo = client
-            .git("https://github.com/MikeTeddyOmondi/bun-next-app")
-            .branch(repo_branch);
-
-        // const project = client.git("https://github.com/MikeTeddyOmondi/bun-next-app").branch("main").tree()
-        // const runner = await client.container()
-        // .from("node:20")
-        // .withDirectory("/src", project)
-        // .withWorkdir("/src")
-        // .withExec(["npm", "install"])
-
-        let runner = client.container().from("node:20");
-
-        runner
-            .with_directory("/app", git_source_dir)
-            .with_exec(vec!["npm", "run", "build"])
-            .directory("./build");
-
-        let build = client
-            .container()
-            .from("lipanski/docker-static-website:2.3.0");
-        // .build(host_source_dir.clone());
-        // .with_directory("/usr/share/nginx/html", repo);
-        // .with_mounted_cache("/src/node_modules", node_cache)
-        // .publish("docker.io/ranckosolutionsinc/pipeline-build") // oci.rancko.labs // docker-registry-host/build
-        // .await?;
-        Ok(())
-    }
+// docker image: docker.io/clux/muslrust:stable //rust:1.77.2
+async fn build_frontend(client: &Query) -> Directory {
+  let backend_directory = client.host().directory("./leptos-app");
+  client
+    .container()
+    .from("clux/muslrust:stable") 
+    //.with_exec(vec!["apt-get", "update"])
+    //.with_exec(vec!["apt-get", "install", "-y", "nodejs", "npm"])
+    .with_exec(vec!["rustup", "target", "add", "wasm32-unknown-unknown"])
+    .with_exec(vec!["cargo", "install", "trunk"])
+    .with_directory("./frontend", backend_directory)
+    .with_workdir("/frontend")
+    .with_exec(vec!["trunk", "build", "--release"])
+    .directory("./dist")
 }
 
-#[cfg(test)]
-mod tests {
-    // use super::*;
+async fn build_prod_image(client: &Query, build_directory: Directory) -> Container {
+  client
+    .container()
+    .from("nginx:1.24.0-alpine3.17")
+    .with_directory("/usr/share/nginx/html", build_directory)
+}
 
-    use crate::Bundler;
-
-    #[test]
-    fn it_works() {
-        // let result = sum(2, 2);
-        // assert_eq!(result, 4);
-        let bundler = Bundler::new("new_project".to_string());
-
-        Bundler::build_pipeline("https://github.com/MikeTeddyOmondi/bun-next-app".to_string(), "main".to_string());
-    }
+async fn push_image(image: Container) -> Result<String> {
+  let tag_uuid = uuid::Uuid::new_v4().to_string();
+  let address = format!("ttl.sh/leptos-app-{}", tag_uuid);
+  println!("OCI Image: {}", &address);
+  let image_reference = image.publish(address).await.expect("Error pushing image to OCI Registry!");
+  Ok(image_reference)
 }

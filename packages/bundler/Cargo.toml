@@ -1,19 +1,21 @@
 [package]
-name = "bundler"
-version = "0.1.0"
 edition = "2021"
+name = "bundler"
+version = "0.0.0"
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-dotenv = "0.15.0"
-uuid = "1.11.0"
-node-bindgen = { version = "6.1.0" }
-serde = { version = "1.0.210", features = ["derive"] }
-serde_json = "1.0.128"
 dagger-sdk = "0.9.8"
+eyre = "0.6.12"
+# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
+napi = { version = "2.12.2", default-features = false, features = ["napi4"] }
+napi-derive = "2.12.2"
 
 [build-dependencies]
-node-bindgen = { version = "6.0", default-features = false, features = ["build"] }
+napi-build = "2.0.1"
 
+[profile.release]
+lto = true
+strip = "symbols"

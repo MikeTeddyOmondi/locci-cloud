@@ -1,3 +1,5 @@
+extern crate napi_build;
+
 fn main() {
-    node_bindgen::build::configure();
+  napi_build::setup();
 }

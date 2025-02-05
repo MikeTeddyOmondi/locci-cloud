@@ -1,7 +1,6 @@
 # Bundler
 
-Source code - example
-```rust
+
 /// Bundler Service
 ///
 /// Build from git source

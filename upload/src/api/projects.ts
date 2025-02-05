@@ -23,7 +23,7 @@ router.post<{}, ProjectsResponse>("/react", async (req, res) => {
   const nodeBaseImage = "node:20";
 
   try {
-    connect(
+    await connect(
       async (client: Client) => {
         const project = client.git(repoUrl).branch(repoBranch).tree();
 
