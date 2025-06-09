@@ -1,0 +1,12 @@
+node_modules/
+**/*.env
+build/
+dist/
+coverage/
+.vscode/
+.DS_Store
+.idea/
+# Logs
+logs/
+*.log
+# Dependency directories

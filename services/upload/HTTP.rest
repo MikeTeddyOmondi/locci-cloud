@@ -1,0 +1,16 @@
+### Create Users
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+    "name": "Anne",
+    "email": "anne@gmail.com"
+}
+
+### Create Waitlist
+POST http://localhost:9000/waitlist
+Content-Type: application/json
+
+{
+    "email": "an@gmail.com"
+}
