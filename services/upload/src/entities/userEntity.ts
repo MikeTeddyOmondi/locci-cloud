@@ -1,8 +1,8 @@
 export interface User {
   id: string;
   email: string;
-  password?: string; // Hashed password for basic auth
-  name?: string;
-  oauthProvider?: string; // e.g., 'google' or 'github'
-  oauthId?: string; // Provider-specific ID
+  password?: string | null; // Hashed password for basic auth
+  name?: string | null;
+  oauthProvider?: string | null; // e.g., 'google' or 'github'
+  oauthId?: string | null; // Provider-specific ID
 }
