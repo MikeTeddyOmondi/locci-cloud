@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Locci Cloud</title>
+    <link rel="stylesheet" href="public/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">Locci Cloud</div>
+      </header>
+
+      <main>
+        <div class="content-wrapper">
+          <section class="hero">
+            <span class="badge">Coming Soon</span>
+            <h1>Join the waitlist for early access</h1>
+            <p>
+              We're building something special. Be among the first to experience
+              it when we launch.
+            </p>
+          </section>
+
+          <section class="waitlist-form">
+            <form id="waitlistForm">
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email address"
+                  required
+                />
+                <button id="joinBtn" type="submit">Join Waitlist</button>
+              </div>
+              <div class="message" id="message"></div>
+              <p class="privacy-note">
+                We respect your privacy and will never share your information.
+              </p>
+            </form>
+          </section>
+        </div>
+
+        <div class="visual-element">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
+        </div>
+      </main>
+
+      <footer>
+        <p>
+          &copy; <span id="current-year"></span> Locci Cloud. All rights
+          reserved.
+        </p>
+      </footer>
+    </div>
+
+    <script src="public/js/script.js"></script>
+    <script>
+      // Update copyright year automatically
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>
