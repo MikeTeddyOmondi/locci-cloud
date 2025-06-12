@@ -1,3 +1,4 @@
+import { User } from '../entities/userEntity.js';
 import UserRepository from '../repositories/userRepository.js';
 
 export default class UserService {
@@ -7,7 +8,7 @@ export default class UserService {
     this.userRepository = new UserRepository();
   }
 
-  async getUserById(id: number) {
+  async getUserById(id: string) {
     return await this.userRepository.findById(id);
   }
 
@@ -15,15 +16,15 @@ export default class UserService {
     return await this.userRepository.findAll();
   }
 
-  async createUser(user: {name: string, email: string}) {
+  async createUser(user: User) {
     return await this.userRepository.create(user);
   }
 
-  async updateUser(id: number, user: {name: string, email: string}) {
+  async updateUser(id: string, user: {name: string, email: string}) {
     return await this.userRepository.update(id, user);
   }
 
-  async deleteUser(id: number) {
+  async deleteUser(id: string) {
     return await this.userRepository.delete(id);
   }
 }

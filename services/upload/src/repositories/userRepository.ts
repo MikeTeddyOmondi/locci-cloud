@@ -3,7 +3,6 @@ import { db } from "../database/db.js";
 import { users } from "../database/schema.js";
 
 import { User } from "../entities/userEntity.js";
-import { PgUUID } from "drizzle-orm/pg-core";
 import { UserSchema } from "../database/schema.js";
 
 export default class UserRepository {
@@ -34,12 +33,13 @@ export default class UserRepository {
   }
 
   async create(user: User): Promise<User> {
-    const [result] = await db.insert(users).values(user).returning();
+    let safeUser = UserSchema.parse(user);
+    const [result] = await db.insert(users).values(safeUser).returning();
     return result;
   }
 
   async update(
-    id: number,
+    id: string,
     user: { name: string; email: string }
   ): Promise<User | null> {
     const [result] = await db
@@ -50,7 +50,7 @@ export default class UserRepository {
     return result || null;
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: string): Promise<boolean> {
     const result = await db.delete(users).where(eq(users.id, id)).returning();
     return result.length > 0; // true or false
   }

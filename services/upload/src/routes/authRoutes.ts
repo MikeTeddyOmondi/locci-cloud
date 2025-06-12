@@ -52,33 +52,33 @@ router.get(
   }
 );
 
-router.post(
-  "/oauth/exchange/:provider",
-  (req: Request, res: Response, next: NextFunction) => {
-    const { provider } = req.params;
+// router.post(
+//   "/oauth/exchange/:provider",
+//   (req: Request, res: Response, next: NextFunction) => {
+//     const { provider } = req.params;
 
-    if (!oauthProviders[provider]) {
-      return res.status(400).json({ message: "Unsupported OAuth provider" });
-    }
+//     if (!oauthProviders[provider]) {
+//       return res.status(400).json({ message: "Unsupported OAuth provider" });
+//     }
 
-    passport.authenticate(
-      provider as string,
-      { session: false },
-      async (err: any, user: any) => {
-        if (err || !user) {
-          return res
-            .status(400)
-            .json({ message: "OAuth authentication failed" });
-        }
-        try {
-          const token = authService.generateTokenForUser(user);
-          res.json({ token });
-        } catch (error: any) {
-          res.status(400).json({ message: error.message });
-        }
-      }
-    )(req, res, next);
-  }
-);
+//     // passport.authenticate(
+//     //   provider as string,
+//     //   { session: false },
+//     //   async (err: any, user: any) => {
+//     //     if (err || !user) {
+//     //       return res
+//     //         .status(400)
+//     //         .json({ message: "OAuth authentication failed" });
+//     //     }
+//     //     try {
+//     //       const token = await authService.generateTokenForUser(user);
+//     //       res.json({ token });
+//     //     } catch (error: any) {
+//     //       res.status(400).json({ message: error.message });
+//     //     }
+//     //   }
+//     // )(req, res, next);
+//   }
+// );
 
 export default router;

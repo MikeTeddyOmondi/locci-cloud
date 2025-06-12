@@ -25,4 +25,6 @@ export const UsersUpdateSchema = UserSchema.partial();
 export const waitlists = pgTable("waitlist", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
+  firstname: text("firstname"),
+  lastname: text("lastname"),
 });
