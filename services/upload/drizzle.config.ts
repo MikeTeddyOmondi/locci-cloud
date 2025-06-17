@@ -1,10 +1,10 @@
-const { defineConfig } = require("drizzle-kit");
+import { defineConfig } from "drizzle-kit";
 
-module.exports = defineConfig({
+export default defineConfig({
   dialect: "postgresql",
-  schema: "./src/database/schema.js",
+  schema: "./build/database/schema.js",
   out: "./migrations",
   dbCredentials: {
-    url: "postgres://postgres:password@172.26.123.215:5432/data_access_layer",
+    url: "postgres://postgres:password@localhost:5432/upload_service",
   }
 });

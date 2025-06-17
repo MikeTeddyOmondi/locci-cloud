@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../database/db.js";
 import { users } from "../database/schema.js";
 
@@ -32,9 +33,17 @@ export default class UserRepository {
     return await db.select().from(users);
   }
 
-  async create(user: User): Promise<User> {
-    let safeUser = UserSchema.parse(user);
-    const [result] = await db.insert(users).values(safeUser).returning();
+  async create(user: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<User> {
+    // let safeUser = UserSchema.parse(user);
+    const id = uuidv4();
+    const [result] = await db
+      .insert(users)
+      .values({ id, ...user })
+      .returning();
     return result;
   }
 
