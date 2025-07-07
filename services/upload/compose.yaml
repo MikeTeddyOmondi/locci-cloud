@@ -1,0 +1,83 @@
+name: locci-upload
+
+services:
+  # etcd:
+  #   image: quay.io/coreos/etcd:v3.6.0
+  #   container_name: etcd
+  #   ports:
+  #     - "2379:2379"
+  #     - "2380:2380"
+  #   environment:
+  #     - ETCD_NAME=etcd0
+  #     - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://etcd:2380
+  #     - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+  #     - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+  #     - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+  #     - ETCD_INITIAL_CLUSTER=etcd0=http://etcd:2380
+  #     - ETCD_INITIAL_CLUSTER_STATE=new
+  #     - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster-1
+  #   volumes:
+  #     - etcd_data:/etcd-data
+  #   command: >
+  #     etcd --data-dir=/etcd-data
+  #     --name etcd0
+  #     --initial-advertise-peer-urls http://etcd:2380
+  #     --listen-peer-urls http://0.0.0.0:2380
+  #     --advertise-client-urls http://etcd:2379
+  #     --listen-client-urls http://0.0.0.0:2379
+  #     --initial-cluster etcd0=http://etcd:2380
+  #     --initial-cluster-state new
+  #     --initial-cluster-token etcd-cluster-1
+
+  # rabbitmq:
+  #   image: rabbitmq:3.12-management
+  #   container_name: rabbitmq
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=guest
+  #     - RABBITMQ_DEFAULT_PASS=guest
+  #   volumes:
+  #     - rabbitmq_data:/var/lib/rabbitmq
+  #   healthcheck:
+  #     test: ["CMD", "rabbitmq-diagnostics", "ping"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+
+  locci-upload:
+    build: .
+    container_name: ranckosolutionsinc/locci-upload:v1.0.0-alpha
+    restart: unless-stopped
+    ports:
+      - "8989:8989"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=8989
+      - HOST=0.0.0.0
+      - ETCD_HOSTS=${ETCD_HOSTS}
+      - ETCD_USERNAME=${ETCD_USERNAME}
+      - ETCD_PASSWORD=${ETCD_PASSWORD}
+      - RABBITMQ_URL=${RABBITMQ_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./logs:/app/logs
+    # depends_on:
+    #   - etcd
+    #   - rabbitmq
+
+#   # Optional: Redis for caching
+#   redis:
+#     image: redis:7-alpine
+#     container_name: redis
+#     ports:
+#       - "6379:6379"
+#     volumes:
+#       - redis_data:/data
+#     command: redis-server --appendonly yes
+
+# volumes:
+#   etcd_data:
+#   rabbitmq_data:
+#   redis_data:

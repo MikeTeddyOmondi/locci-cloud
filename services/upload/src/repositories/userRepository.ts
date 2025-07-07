@@ -21,13 +21,13 @@ export default class UserRepository {
     return user || null;
   }
 
-  async findByOAuthId(provider: string, oauthId: string): Promise<User | null> {
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.oauthProvider, provider)); // eq(users.oauthId, oauthId)
-    return user || null;
-  }
+  // async findByOAuthId(provider: string, oauthId: string): Promise<User | null> {
+  //   const [user] = await db
+  //     .select()
+  //     .from(users)
+  //     .where(eq(users.oauthProvider, provider)); // eq(users.oauthId, oauthId)
+  //   return user || null;
+  // }
 
   async findAll() {
     return await db.select().from(users);

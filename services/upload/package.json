@@ -14,12 +14,14 @@
     "migrate": "drizzle-kit push"
   },
   "dependencies": {
+    "amqplib": "^0.10.8",
     "bcryptjs": "^3.0.2",
     "connect-ensure-login": "^0.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
     "drizzle-zod": "^0.8.2",
+    "etcd3": "^1.1.2",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "google-auth-library": "^9.15.1",
@@ -33,6 +35,7 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.7",
     "@types/bcryptjs": "^2.4.6",
     "@types/connect-ensure-login": "^0.1.9",
     "@types/cors": "^2.8.18",

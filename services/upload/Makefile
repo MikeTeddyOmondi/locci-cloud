@@ -1,0 +1,55 @@
+# Makefile
+.PHONY: help build run stop clean test
+
+# Default target
+help:
+    @echo "Available commands:"
+    @echo "  build     - Build the Docker image"
+    @echo "  run       - Start all services with docker-compose"
+    @echo "  stop      - Stop all services"
+    @echo "  clean     - Remove containers and volumes"
+    @echo "  test      - Run tests"
+    @echo "  dev       - Start development environment"
+    @echo "  logs      - View logs"
+
+# Build the Docker image
+build:
+    docker-compose build
+
+# Start all services
+run:
+    docker-compose up -d
+
+# Stop all services
+stop:
+    docker-compose down
+
+# Clean up containers and volumes
+clean:
+    docker-compose down -v
+    docker system prune -f
+
+# Run tests
+test:
+    npm test
+
+# Start development environment
+dev:
+    docker-compose up -d etcd rabbitmq redis
+    npm run dev
+
+# View logs
+logs:
+    docker-compose logs -f project-backend
+
+# Initialize the project (first time setup)
+init:
+    cp .env.example .env
+    npm install
+    mkdir -p logs
+    docker-compose up -d etcd rabbitmq redis
+    @echo "Project initialized! Please update .env file with your configuration."
+
+# Health check
+health:
+    curl -f http://localhost:3000/health || echo "Service is not healthy"

@@ -1,0 +1,70 @@
+### Health check
+GET http://localhost:8989/health
+
+### Register
+POST http://localhost:8989/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "me@mt0.dev",
+    "password": "password"
+}
+
+### Login - Admin
+POST http://localhost:8989/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@locci.cloud",
+    "password": "password"
+}
+
+### Login - User
+POST http://localhost:8989/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "me@mt0.dev",
+    "password": "password"
+}
+
+### Profile
+GET http://localhost:8989/api/auth/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YTVjZTRkMC01MWZhLTRlOWQtOGVlOS00MDAzOTQ4NWQwOTQiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MTg4OTk1NSwiZXhwIjoxNzUxOTc2MzU1fQ.SAw7CWF5cfw5BQCQoML65WDs940rr117o8lNhsYCpwc
+
+### List Users
+GET http://localhost:8989/api/auth/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxOTEyMDUzLCJleHAiOjE3NTE5OTg0NTN9.lVkwQe0QudfUVAB9DaSWQ2xhWyIpa-_GlJLyhJeGHOg
+
+### List Projects
+GET http://localhost:8989/api/projects
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxOTEyMDUzLCJleHAiOjE3NTE5OTg0NTN9.lVkwQe0QudfUVAB9DaSWQ2xhWyIpa-_GlJLyhJeGHOg
+
+### Create a project (Auth JWT token required)
+POST http://localhost:8989/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YTVjZTRkMC01MWZhLTRlOWQtOGVlOS00MDAzOTQ4NWQwOTQiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MTg4OTk1NSwiZXhwIjoxNzUxOTc2MzU1fQ.SAw7CWF5cfw5BQCQoML65WDs940rr117o8lNhsYCpwc
+Content-Type: application/json
+
+{
+    "name": "web-app",
+    "description": "sample web app",
+    "repositoryUrl": "https://github.com/MikeTeddy/Snake-Game.git",
+    "buildConfig": {
+      "dockerfile": "Dockerfile",
+      "context": ".",
+      "buildArgs": {
+        "NODE_ENV": "production"
+      }
+    },
+    "deployConfig": {
+      "target": "kubernetes",
+      "namespace": "default",
+      "replicas": 3,
+      "port": 3000
+    }
+}
+
+### 

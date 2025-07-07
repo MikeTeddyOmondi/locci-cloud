@@ -1,5 +1,5 @@
-import UserService from "./services/userService.js";
-import WaitlistService from "./services/waitlistService.js";
+import UserService from "../src/services/userService.js";
+import WaitlistService from "../src/services/waitlistService.js";
 
 async function main() {
   const userService = new UserService();
