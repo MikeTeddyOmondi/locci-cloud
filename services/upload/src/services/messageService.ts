@@ -50,7 +50,7 @@ class MessageService {
     }
   }
 
-  async publishProjectEvent(eventType, projectId, data) {
+  async publishProjectEvent(eventType: string, projectId: string, data: any) {
     const message = {
       eventType,
       projectId,
@@ -66,7 +66,7 @@ class MessageService {
     );
   }
 
-  async triggerBuild(projectId, buildConfig) {
+  async triggerBuild(projectId: string, buildConfig: any) {
     const message = {
       projectId,
       buildConfig,
@@ -80,7 +80,7 @@ class MessageService {
     );
   }
 
-  async triggerDeploy(projectId, deployConfig) {
+  async triggerDeploy(projectId: string, deployConfig: any) {
     const message = {
       projectId,
       deployConfig,

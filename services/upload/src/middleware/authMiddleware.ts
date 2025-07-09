@@ -78,13 +78,11 @@ const checkProjectOwnership = async (req: Request, res: Response, next: NextFunc
     }
 
     const projectKey = `${config.etcdKeys.projects}/${projectId}`;
-    const projectData = await etcdService.get(projectKey);
+    const project = await etcdService.get(projectKey);
 
-    if (!projectData) {
+    if (!project) {
       return res.status(404).json({ error: "Project not found" });
     }
-
-    const project = JSON.parse(projectData);
 
     // Admin can access all projects, users can only access their own
     // @ts-ignore

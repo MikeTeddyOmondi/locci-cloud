@@ -241,11 +241,12 @@ router.post(
     try {
       // @ts-ignore
       const project = req.project;
-      const { buildOptions } = req.body;
+      const { buildOptions, ...otherBuildData } = req.body;
 
       const buildConfig = {
         ...project.buildConfig,
         ...buildOptions,
+        ...otherBuildData,
         projectId: project.projectId,
         // @ts-ignore
         triggeredBy: req.user.userId,
