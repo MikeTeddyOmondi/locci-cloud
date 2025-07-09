@@ -76,7 +76,14 @@ class MessageService {
     this.channel.sendToQueue(
       config.rabbitmq.queues.buildTrigger,
       Buffer.from(JSON.stringify(message)),
-      { persistent: true }
+      {
+        persistent: true,
+        contentType: "application/json",
+        headers: {
+          "x-project-id": projectId,
+          "x-triggered-at": message.timestamp,
+        },
+      }
     );
   }
 
@@ -90,7 +97,14 @@ class MessageService {
     this.channel.sendToQueue(
       config.rabbitmq.queues.deployTrigger,
       Buffer.from(JSON.stringify(message)),
-      { persistent: true }
+      {
+        persistent: true,
+        contentType: "application/json",
+        headers: {
+          "x-project-id": projectId,
+          "x-triggered-at": message.timestamp,
+        },
+      }
     );
   }
 
