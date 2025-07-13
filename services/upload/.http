@@ -31,27 +31,28 @@ Content-Type: application/json
 ### Profile
 GET http://localhost:8989/api/auth/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YTVjZTRkMC01MWZhLTRlOWQtOGVlOS00MDAzOTQ4NWQwOTQiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MTg4OTk1NSwiZXhwIjoxNzUxOTc2MzU1fQ.SAw7CWF5cfw5BQCQoML65WDs940rr117o8lNhsYCpwc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
 
 ### List Users
 GET http://localhost:8989/api/auth/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxOTEyMDUzLCJleHAiOjE3NTE5OTg0NTN9.lVkwQe0QudfUVAB9DaSWQ2xhWyIpa-_GlJLyhJeGHOg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
 
 ### List Projects
 GET http://localhost:8989/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxOTEyMDUzLCJleHAiOjE3NTE5OTg0NTN9.lVkwQe0QudfUVAB9DaSWQ2xhWyIpa-_GlJLyhJeGHOg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
 
 ### Create a project (Auth JWT token required)
 POST http://localhost:8989/api/projects
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzczNjU5MS1hYmFlLTQzY2EtOGM0My1lMWI3MmYyZTk2ZDIiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MjA4Nzg2OSwiZXhwIjoxNzUyMTc0MjY5fQ.OXm3GJcmJu4oXpRZVZJB6IQ52r1odlV3JXpEAi0ILZQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
 Content-Type: application/json
 
 {
-  "name": "web-app",
-  "description": "sample web app",
+  "name": "snake-game",
+  "description": "snake game app",
   "repoUrl": "https://github.com/MikeTeddy/Snake-Game.git",
+  "repoBranch": "main",
   "buildConfig": {
     "dockerfile": "Dockerfile",
     "context": ".",
@@ -68,13 +69,11 @@ Content-Type: application/json
 }
 
 ### Trigger Build
-POST http://localhost:8989/api/projects/69cd436b-1187-41fb-a486-4571012bce51/build
+POST http://localhost:8989/api/projects/ef3a33a7-5adb-4528-ba7c-2bdf95dd2395/build
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzczNjU5MS1hYmFlLTQzY2EtOGM0My1lMWI3MmYyZTk2ZDIiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MjA4Nzg2OSwiZXhwIjoxNzUyMTc0MjY5fQ.OXm3GJcmJu4oXpRZVZJB6IQ52r1odlV3JXpEAi0ILZQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
 
 {
-  "repoUrl": "https://github.com/MikeTeddy/Snake-Game.git",
-  "repoBranch": "main",
   "buildOptions": {
     "tag": "v1.0.0",
     "push": true
@@ -87,9 +86,28 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzczNjU5MS1hYmFlLTQzY2EtOGM0My1lMWI3MmYyZTk2ZDIiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MjA4Nzg2OSwiZXhwIjoxNzUyMTc0MjY5fQ.OXm3GJcmJu4oXpRZVZJB6IQ52r1odlV3JXpEAi0ILZQ
 
 {
+  "id": "0ad81c20360bf54a6862df8046ef71002fc0ad939ebcbc4f415deb67dc1e246d",
+  "action": "start",
+  "container": {
+    "name": "snake-app",
+    "image": "nginx:1.25.3-alpine-slim",
+    "ports": {"80": "0"},
+    "networks": ["proxy-network"],
+    "subdomain": "app0-1",
+    "environment": ["NGINX_HOST=snake.locci.cloud.localhost"],
+    "volumes": ["app-01-vol:/usr/share/nginx/html:ro"]
+  },
+  "network": {
+    "name": "proxy-network",
+    "driver": "bridge",
+    "labels": {
+      "environment": "production"
+    }
+  },
+  "target": "default",
   "deployOptions": {
     "environment": "production",
-    "replicas": 3
+    "replicas": 1
   }
 }
 

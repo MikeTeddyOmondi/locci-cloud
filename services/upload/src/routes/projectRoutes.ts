@@ -21,8 +21,14 @@ router.post(
   //   upload.single("projectFile"),
   async (req: Request, res: Response) => {
     try {
-      const { name, description, repositoryUrl, buildConfig, deployConfig } =
-        req.body;
+      const {
+        name,
+        description,
+        repoUrl,
+        repoBranch,
+        buildConfig,
+        deployConfig,
+      } = req.body;
       const projectId = uuidv4();
 
       if (!name) {
@@ -34,7 +40,8 @@ router.post(
         projectId,
         name,
         description,
-        repositoryUrl,
+        repoUrl,
+        repoBranch: repoBranch || "main",
         // @ts-ignore
         ownerId: req.user.userId,
         buildConfig: buildConfig ? buildConfig : {},
@@ -241,13 +248,17 @@ router.post(
     try {
       // @ts-ignore
       const project = req.project;
-      const { buildOptions, ...otherBuildData } = req.body;
+      const { buildOptions } = req.body;
 
       const buildConfig = {
+        buildId: uuidv4(),
         ...project.buildConfig,
         ...buildOptions,
-        ...otherBuildData,
         projectId: project.projectId,
+        repoUrl: project.repoUrl,
+        repoBranch: project.repoBranch || "main",
+        nodeVersion: "node:18.18.2-alpine", // Node.js version
+        nginxVersion: "nginx:1.25.3-alpine-slim", // NGINX version
         // @ts-ignore
         triggeredBy: req.user.userId,
         triggeredAt: new Date().toISOString(),
@@ -290,11 +301,12 @@ router.post(
     try {
       // @ts-ignore
       const project = req.project;
-      const { deployOptions } = req.body;
+      const { deployOptions, ...otherBuildData } = req.body;
 
       const deployConfig = {
         ...project.deployConfig,
         ...deployOptions,
+        ...otherBuildData,
         projectId: project.projectId,
         // @ts-ignore
         triggeredBy: req.user.userId,
