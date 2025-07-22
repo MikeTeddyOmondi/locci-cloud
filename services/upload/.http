@@ -1,9 +1,19 @@
+@hostname = ujumbesms.co.ke
+# @port = 8080
+# @host = {{hostname}}:{{port}}
+@contentType = application/json
+# @createdAt = {{$datetime iso8601}}
+# @apiKey = YOUR API KEY HERE
+# @apiKey = {{$dotenv SOME_API_KEY}}
+@token = {{login.response.body.token}}
+@projectId = {{createProject.response.body.project.projectId}}
+
 ### Health check
 GET http://localhost:8989/health
 
 ### Register
 POST http://localhost:8989/api/auth/register
-Content-Type: application/json
+Content-Type: {{contentType}}
 
 {
     "email": "me@mt0.dev",
@@ -11,8 +21,9 @@ Content-Type: application/json
 }
 
 ### Login - Admin
+# @name login
 POST http://localhost:8989/api/auth/login
-Content-Type: application/json
+Content-Type: {{contentType}}
 
 {
     "email": "admin@locci.cloud",
@@ -20,8 +31,9 @@ Content-Type: application/json
 }
 
 ### Login - User
+# @name login
 POST http://localhost:8989/api/auth/login
-Content-Type: application/json
+Content-Type: {{contentType}}
 
 {
     "email": "me@mt0.dev",
@@ -30,23 +42,24 @@ Content-Type: application/json
 
 ### Profile
 GET http://localhost:8989/api/auth/profile
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
 
 ### List Users
 GET http://localhost:8989/api/auth/users
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
 
 ### List Projects
 GET http://localhost:8989/api/projects
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
 
 ### Create a project (Auth JWT token required)
+# @name createProject
 POST http://localhost:8989/api/projects
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
-Content-Type: application/json
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
 
 {
   "name": "snake-game",
@@ -69,9 +82,9 @@ Content-Type: application/json
 }
 
 ### Trigger Build
-POST http://localhost:8989/api/projects/ef3a33a7-5adb-4528-ba7c-2bdf95dd2395/build
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmYjNmMy1kNGFlLTQyNDItODA3Yy02NTIyOTFkYzkyYTgiLCJlbWFpbCI6ImFkbWluQGxvY2NpLmNsb3VkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUyNDI0MzkyLCJleHAiOjE3NTI1MTA3OTJ9.16dtdgfHKPzZJUB5AaFhvWPKA5FqBSslBT-Ofe5SrSU
+POST http://localhost:8989/api/projects/{{projectId}}/build
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
 
 {
   "buildOptions": {
@@ -81,9 +94,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMDJmY
 }
 
 ### Trigger Deploy
-POST http://localhost:8989/api/projects/69cd436b-1187-41fb-a486-4571012bce51/deploy
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzczNjU5MS1hYmFlLTQzY2EtOGM0My1lMWI3MmYyZTk2ZDIiLCJlbWFpbCI6Im1lQG10MC5kZXYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MjA4Nzg2OSwiZXhwIjoxNzUyMTc0MjY5fQ.OXm3GJcmJu4oXpRZVZJB6IQ52r1odlV3JXpEAi0ILZQ
+POST http://localhost:8989/api/projects/{{projectId}}/deploy
+Content-Type: {{contentType}}
+Authorization: Bearer {{token}}
 
 {
   "id": "0ad81c20360bf54a6862df8046ef71002fc0ad939ebcbc4f415deb67dc1e246d",
@@ -91,7 +104,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzczN
   "container": {
     "name": "snake-app",
     "image": "nginx:1.25.3-alpine-slim",
-    "ports": {"80": "0"},
+    "ports": {"80": "80"},
     "networks": ["proxy-network"],
     "subdomain": "app0-1",
     "environment": ["NGINX_HOST=snake.locci.cloud.localhost"],
