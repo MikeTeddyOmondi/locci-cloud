@@ -64,7 +64,7 @@ Content-Type: {{contentType}}
 {
   "name": "snake-game",
   "description": "snake game app",
-  "repoUrl": "https://github.com/MikeTeddy/Snake-Game.git",
+  "repoUrl": "https://github.com/MikeTeddyOmondi/Snake-Game.git",
   "repoBranch": "main",
   "buildConfig": {
     "dockerfile": "Dockerfile",
@@ -100,7 +100,7 @@ Authorization: Bearer {{token}}
 
 {
   "id": "0ad81c20360bf54a6862df8046ef71002fc0ad939ebcbc4f415deb67dc1e246d",
-  "action": "start",
+  "action": "create",
   "container": {
     "name": "snake-app",
     "image": "nginx:1.25.3-alpine-slim",
